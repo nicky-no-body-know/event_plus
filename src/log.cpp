@@ -37,7 +37,8 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	snprintf(fileName, FILE_NAME_LEN, "%s", name);
 	
 	snprintf(fullName, FILE_FULL_LEN, "%s/%s-%s.log", filePath, filePrefix, fileName);
-	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT | O_APPEND);
+	printf("%s\n", fullName);
+	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666);
 }
 
 void Log::log_p(int level, const char *fmt, ...)
