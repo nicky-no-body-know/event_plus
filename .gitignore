@@ -4,3 +4,4 @@ Makefile
 example/hello
 *.dSYM
 *.a
+*.log
