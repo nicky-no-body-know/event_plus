@@ -2,10 +2,10 @@
 #include "log.h"
 #include "event_util.h"
 #define FILE_FULL_LEN 1024
+#define FILE_PERM_FLAG S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP
 NAMESPACE_BEGIN
 
 char LogStr[][10] = {"info", "warning", "debug", "trace"};
-
 void Log::log_open(const char *path, const char *prefix, const char *name)
 {
 	char filePath[ FILE_PATH_LEN ];
@@ -39,8 +39,9 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	snprintf(fileName, FILE_NAME_LEN, "%s", name);
 	
 	snprintf(fullName, FILE_FULL_LEN, "%s/%s-%s.log", filePath, filePrefix, fileName);
-	printf("%s\n", fullName);
-	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666);
+	printf("log file name = %s\n", fullName);
+	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT | O_APPEND, FILE_PERM_FLAG);
+	printf("fd = %d\n", _fd);
 }
 
 void Log::log_p(int level, const char *fmt, ...)
