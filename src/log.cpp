@@ -15,10 +15,12 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	assert(name != NULL);
 	if (NULL == path)
 	{
-		getcwd(filePath, FILE_PATH_LEN);
+		char cwd[10];
+		getcwd(cwd, FILE_PATH_LEN);
+		snprintf(filePath, FILE_PATH_LEN, "%s/../lib", cwd);
 	} else
 	{
-		snprintf(filePath, FILE_PATH_LEN, "%s../lib", path);
+		snprintf(filePath, FILE_PATH_LEN, "%s", path);
 	}
 	int pathLen = strlen(filePath);
 	if ( filePath[pathLen - 1] == '/')
