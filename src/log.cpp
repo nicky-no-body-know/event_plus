@@ -31,7 +31,7 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 		snprintf(filePrefix, FILE_PRE_NAME_LEN, "%s", prefix);
 	} else
 	{
-		snprintf(filePrefix, FILE_PRE_NAME_LEN, "%s", "all")
+		snprintf(filePrefix, FILE_PRE_NAME_LEN, "%s", "all");
 	}
 
 	snprintf(fileName, FILE_NAME_LEN, "%s", name);
