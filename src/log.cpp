@@ -18,7 +18,7 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 		getcwd(filePath, FILE_PATH_LEN);
 	} else
 	{
-		snprintf(filePath, FILE_PATH_LEN, "%s", path);
+		snprintf(filePath, FILE_PATH_LEN, "%s../lib", path);
 	}
 	int pathLen = strlen(filePath);
 	if ( filePath[pathLen - 1] == '/')
@@ -26,10 +26,12 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 		filePath[pathLen - 1] = 0;
 	}
 
-	filePrefix[0] = '\0';
 	if (NULL != prefix)
 	{
 		snprintf(filePrefix, FILE_PRE_NAME_LEN, "%s", prefix);
+	} else
+	{
+		snprintf(filePrefix, FILE_PRE_NAME_LEN, "%s", "all")
 	}
 
 	snprintf(fileName, FILE_NAME_LEN, "%s", name);
