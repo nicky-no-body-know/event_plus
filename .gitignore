@@ -1,2 +1,5 @@
-.ycm*
 Makefile
+*.o
+.ycm*
+example/hello
+*.dYSM
