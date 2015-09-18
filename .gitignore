@@ -3,3 +3,4 @@ Makefile
 .ycm*
 example/hello
 *.dYSM
+*.a
