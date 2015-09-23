@@ -2,7 +2,6 @@
 #include "log.h"
 #include "event_util.h"
 #define FILE_FULL_LEN 1024
-#define FILE_PERM_FLAG S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP
 NAMESPACE_BEGIN
 
 char LogStr[][10] = {"info", "warning", "debug", "trace"};
@@ -40,8 +39,12 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	
 	snprintf(fullName, FILE_FULL_LEN, "%s/%s-%s.log", filePath, filePrefix, fileName);
 	printf("log file name = %s\n", fullName);
-	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT | O_APPEND, FILE_PERM_FLAG);
-	printf("fd = %d\n", _fd);
+	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT, 0666);
+	if (-1 == open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666))
+	{
+		perror("open log file failed!");
+		exit(1);
+	}
 }
 
 void Log::log_p(int level, const char *fmt, ...)

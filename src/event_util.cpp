@@ -47,7 +47,9 @@ int FileUtil::open(const char *path, int oflag, ...)
 	int ret;
 	va_list args;
 	va_start(args, oflag);
-	if (-1 == (ret = ::open(path, oflag, args)) )
+	int mode = va_arg(args, int);
+	umask(0);
+	if (-1 == (ret = ::open(path, oflag, mode)) )
 	{
 		perror("open failed!");
 		exit(1);
