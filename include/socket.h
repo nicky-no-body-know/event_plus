@@ -17,7 +17,6 @@ private:
 
 protected:
 	EventBase& _base;
-	int _fd;
 };
 
 
@@ -37,6 +36,7 @@ public:
 
 	int get_file_desc() const { return _fd; }
 private:
+	int _fd;
 };
 NAMESPACE_END
 #endif
