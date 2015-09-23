@@ -30,7 +30,7 @@ public:
 	TcpSocket(const TcpSocket& sock) { _fd = sock.get_file_desc(); }
 	TcpSocket& operator=(const TcpSocket& sock) { _fd = sock.get_file_desc(); return *this; }
 
-	const int get_file_desc() const { return _fd; }
+	int get_file_desc() const { return _fd; }
 private:
 };
 NAMESPACE_END
