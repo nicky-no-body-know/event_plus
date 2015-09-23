@@ -119,10 +119,10 @@ void* MemUtil::malloc(int bytes)
 	}
 	return ptr;
 }
-void* MemUtil::calloc(int counts, int size)
+void* MemUtil::calloc(int count, int size)
 {
 	void *ptr;
-	if (NULL == (ptr = ::calloc(counts, size)) )
+	if (NULL == (ptr = ::calloc(count, size)) )
 	{
 		perror("calloc failed!");
 		exit(1);

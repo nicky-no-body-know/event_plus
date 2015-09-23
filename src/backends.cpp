@@ -5,6 +5,7 @@
 #define log _base.get_log()
 NAMESPACE_BEGIN
 using namespace std;
+//这里调整字节的逻辑有问题
 void SelectMethod::add(int fd, int flags)
 {
 	assert(fd >= 0);
@@ -53,8 +54,8 @@ int SelectMethod::dispatch(timeval *tv)
 		free(oldPtr);
 		_isResized = false;
 	}
-	memcpy((void*)_readset_out, (void*)_readset_in, _size);
-	memcpy((void*)_writeset_out, (void*)_writeset_in, _size);
+	memcpy(_readset_out, _readset_in, _size);
+	memcpy(_writeset_out, _writeset_in, _size);
 	
 	nfd = _maxfd + 1;
 	res = ::select(nfd, _readset_out, _writeset_out, NULL, tv);
