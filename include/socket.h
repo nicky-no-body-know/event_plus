@@ -2,18 +2,21 @@
 #define EVENT_PLUS_SOCKET_H
 
 #include "comm.h"
+#include "event_base.h"
 #include "event_util.h"
+#include "log.h"
 
 NAMESPACE_BEGIN
 class SocketBase
 {
 public:
-	SocketBase() {}
+	SocketBase(EventBase& base) : _base(base) {}
 private:
 	SocketBase(SocketBase&);
 	SocketBase& operator=(SocketBase&);
 
 protected:
+	EventBase& _base;
 	int _fd;
 };
 
@@ -21,13 +24,15 @@ protected:
 class TcpSocket : public SocketBase
 {
 public:
-	TcpSocket()
+	TcpSocket(EventBase &base) : SocketBase(base)
 	{
 		_fd = EventUtil_socket(AF_INET, SOCK_STREAM, 0);
+		Log& log = _base.get_log();
+		log.log_p(LOG_INFO, __FILE__, __FUNCTION__, __LINE__, "fd = %d", _fd);
 	}
-	explicit TcpSocket(int fd) { _fd = fd; }
+	explicit TcpSocket(EventBase& base, int fd) : SocketBase(base) { _fd = fd; }
 
-	TcpSocket(const TcpSocket& sock) { _fd = sock.get_file_desc(); }
+	TcpSocket(EventBase& base, const TcpSocket& sock) : SocketBase(base) { _fd = sock.get_file_desc(); }
 	TcpSocket& operator=(const TcpSocket& sock) { _fd = sock.get_file_desc(); return *this; }
 
 	int get_file_desc() const { return _fd; }

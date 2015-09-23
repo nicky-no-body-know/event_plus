@@ -37,7 +37,7 @@ int main()
 {
 	struct sockaddr_in addr;
 	EventBase base;
-	TcpSocket listen_sock;
+	TcpSocket listen_sock(base);
 	HelloCallback hello(base);
 
 	addr.sin_family = AF_INET;
