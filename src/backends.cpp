@@ -53,8 +53,8 @@ int SelectMethod::dispatch(timeval *tv)
 		free(oldPtr);
 		_isResized = false;
 	}
-	memcpy((void*)_readset_out, (void*)_readset_in, _size * sizeof(fd_set));
-	memcpy((void*)_writeset_out, (void*)_writeset_in, _size * sizeof(fd_set));
+	memcpy((void*)_readset_out, (void*)_readset_in, _size);
+	memcpy((void*)_writeset_out, (void*)_writeset_in, _size);
 	
 	nfd = _maxfd + 1;
 	res = ::select(nfd, _readset_out, _writeset_out, NULL, tv);
