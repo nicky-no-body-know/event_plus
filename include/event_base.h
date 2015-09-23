@@ -35,7 +35,7 @@ private:
 		init_log(); 
 		init_methods();
 	}
-	void init_log() { log.log_open(LOG_PATH_NAME, NULL, LOG_FILE_NAME); }
+	void init_log() { log.LOG_OPEN(LOG_PATH_NAME, NULL, LOG_FILE_NAME); }
 	void init_methods();
 	void handle_active_events();
 

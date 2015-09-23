@@ -2,7 +2,7 @@
 #include "event.h"
 #include "event_util.h"
 #include "event_base.h"
-
+#define log _base.get_log()
 NAMESPACE_BEGIN
 using namespace std;
 void SelectMethod::add(int fd, int flags)
@@ -22,8 +22,7 @@ void SelectMethod::add(int fd, int flags)
 		FD_SET(tmpfd, _readset_in);
 	if (flags & EV_WRITE)
 		FD_SET(tmpfd, _writeset_in);
-	Log& log = _base.get_log();
-	log.log_p(LOG_INFO, __FILE__, __FUNCTION__, __LINE__, "%s, maxfd=%d, size=%d", "select add", _maxfd, _size);
+	log.LOG_P(LOG_INFO, "maxfd=%d, size=%d", _maxfd, _size);
 }
 
 void SelectMethod::del(int fd, int flags)
@@ -59,10 +58,10 @@ int SelectMethod::dispatch(timeval *tv)
 	res = ::select(nfd, _readset_out, _writeset_out, NULL, tv);
 	if (-1 == res)
 	{
-		perror("select faild!");
+		//perror("select faild!");
 		return -1;
 	}
-
+	log.LOG_P(LOG_INFO, "nfd = %d, res = %d", nfd, res);
 	vector<int> fds;
 	for (int i = 0; i < nfd; i++)
 	{

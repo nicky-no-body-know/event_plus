@@ -53,6 +53,7 @@ public:
 private:
 	void init()
 	{
+		_maxfd = -1;
 		_isResized = false;
 		_readset_in = (fd_set*)EventUtil_calloc(_size, sizeof(fd_set));
 		_readset_out = (fd_set*)EventUtil_calloc(_size, sizeof(fd_set));

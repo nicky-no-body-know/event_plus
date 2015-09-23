@@ -52,7 +52,7 @@ void Log::log_p(int level, const char *file_name, const char *func, const int li
 	va_list args;
 	va_start(args, fmt);
 	printf("[%s][%s][%s][%d]:", LogStr[level], file_name, func, line);
-	printf(fmt, args);
+	vprintf(fmt, args);
 	printf("\n");
 	va_end(args);
 }

@@ -10,6 +10,7 @@ int ServerListener::callback(int fd, int res) const
 	struct sockaddr_in addr;
 	socklen_t addrlen;
 	
+	_base.get_log().LOG_P(LOG_INFO, "fd = %d, res = %d", fd, res);
 	if (EV_READ & res)
 	{
 		newfd = EventUtil_accept(fd, (struct sockaddr*)&addr, &addrlen);

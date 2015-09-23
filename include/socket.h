@@ -27,7 +27,7 @@ public:
 	{
 		_fd = EventUtil_socket(AF_INET, SOCK_STREAM, 0);
 		Log& log = _base.get_log();
-		log.log_p(LOG_INFO, __FILE__, __FUNCTION__, __LINE__, "fd = %d", _fd);
+		log.LOG_P(LOG_INFO, "fd = %d", _fd);
 	}
 	explicit TcpSocket(EventBase& base, int fd) : SocketBase(base) { _fd = fd; }
 

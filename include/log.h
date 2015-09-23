@@ -23,7 +23,7 @@ public:
 		memset(_fileName, 0, sizeof(_fileName));
 	}
 	void log_open(const char *filePath, const char *filePrefix, const char *fileName);
-	void log_p(int level, const char *file_name, const char *func, const int line, const char *fmt, ...);
+	void log_p(int level,const char *file_name, const char *func, const int line, const char *fmt, ...);
 	void log_close();
 private:
 	Log(const Log&);
@@ -36,7 +36,7 @@ private:
 };
 
 #define LOG_OPEN(filePath,filePrefix,fileName) Log::log_open(filePath, filePrefix, fileName)
-#define LOG_P(level, fmt, args...) Log::log_p(level, fmt, ##args)
+#define LOG_P(level, fmt, args...) Log::log_p(level, __FILE__, __FUNCTION__, __LINE__, fmt, ##args)
 #define LOG_CLOSE() Log::log_close()
 NAMESPACE_END
 #endif

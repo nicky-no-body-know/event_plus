@@ -59,6 +59,7 @@ void EventBase::handle_active_events()
 	vector<Event*>::iterator iter;
 	for ( iter = _activeEvents.begin(); iter != _activeEvents.end(); iter++)
 	{
+		log.LOG_P(LOG_INFO, "fd = %d", (*iter)->get_file_desc());
 		(*iter)->callback();	
 	}
 }
