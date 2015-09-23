@@ -53,12 +53,14 @@ int SelectMethod::dispatch(timeval *tv)
 		free(oldPtr);
 		_isResized = false;
 	}
+	memcpy((void*)_readset_out, (void*)_readset_in, sizeof(_readset_in));
+	memcpy((void*)_writeset_out, (void*)_writeset_in, sizeof(_readset_in));
 	
 	nfd = _maxfd + 1;
 	res = ::select(nfd, _readset_out, _writeset_out, NULL, tv);
 	if (-1 == res)
 	{
-		//perror("select faild!");
+		perror("select faild!");
 		return -1;
 	}
 	log.LOG_P(LOG_INFO, "nfd = %d, res = %d", nfd, res);
