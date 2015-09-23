@@ -39,12 +39,12 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	
 	snprintf(fullName, FILE_FULL_LEN, "%s/%s-%s.log", filePath, filePrefix, fileName);
 	printf("log file name = %s\n", fullName);
-	_fd = EventUtil_open(fullName, O_RDWR | O_CREAT, 0666);
-	if (-1 == open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666))
+	if (-1 == (_fd = open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666)))
 	{
 		perror("open log file failed!");
 		exit(1);
 	}
+	printf("fd = %d\n", _fd);
 }
 
 void Log::log_p(int level, const char *fmt, ...)
