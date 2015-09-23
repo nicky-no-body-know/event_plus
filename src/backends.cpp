@@ -45,11 +45,11 @@ int SelectMethod::dispatch(timeval *tv)
 	if (_isResized)
 	{
 		oldPtr = _readset_out;
-		_readset_out = (fd_set*)EventUtil_realloc(oldPtr, _size * sizeof(fd_set));
+		_readset_out = (fd_set*)EventUtil_realloc(oldPtr, _size );
 		free(oldPtr);
 
 		oldPtr = _writeset_in;
-		_writeset_in = (fd_set*)EventUtil_realloc(oldPtr, _size * sizeof(fd_set));
+		_writeset_in = (fd_set*)EventUtil_realloc(oldPtr, _size );
 		free(oldPtr);
 		_isResized = false;
 	}
@@ -85,8 +85,8 @@ void SelectMethod::resize(int size)
 {
 	assert(size > 0);
 	_isResized = true;
-	EventUtil_realloc(_readset_in, size * sizeof(fd_set));
-	EventUtil_realloc(_writeset_in, size * sizeof(fd_set));
+	EventUtil_realloc(_readset_in, size );
+	EventUtil_realloc(_writeset_in, size );
 }
 
 
