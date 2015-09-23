@@ -8,6 +8,7 @@ int NetUtil::socket(int domain, int type, int protocol)
 		perror("socket create failed!");
 		exit(1);
 	}
+	printf("sockfd = %d", ret);
 	return ret;
 }
 
