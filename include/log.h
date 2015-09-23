@@ -23,7 +23,7 @@ public:
 		memset(_fileName, 0, sizeof(_fileName));
 	}
 	void log_open(const char *filePath, const char *filePrefix, const char *fileName);
-	void log_p(int level, const char *fmt, ...);
+	void log_p(int level, const char *file_name, const char *func, const int line, const char *fmt, ...);
 	void log_close();
 private:
 	Log(const Log&);

@@ -14,8 +14,6 @@ struct HelloCallback : public EventCallback
 	virtual int callback(int fd, int res) const
 	{
 		int len = 0;
-		Log &log = _base.get_log();
-		log.log_p(LOG_INFO, "%s", "hello callback");
 		char hello[] = "hello\n";
 		char world[] = "world\n";
 		if ((res & EV_READ) && (res & EV_WRITE))

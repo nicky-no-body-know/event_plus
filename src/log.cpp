@@ -47,11 +47,11 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	printf("fd = %d\n", _fd);
 }
 
-void Log::log_p(int level, const char *fmt, ...)
+void Log::log_p(int level, const char *file_name, const char *func, const int line, const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	printf("[%s][%s][%s][%d]:", LogStr[level], __FILE__, __FUNCTION__, __LINE__);
+	printf("[%s][%s][%s][%d]:", LogStr[level], file_name, func, line);
 	printf(fmt, args);
 	printf("\n");
 	va_end(args);

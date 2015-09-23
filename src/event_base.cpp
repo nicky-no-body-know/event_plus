@@ -7,7 +7,6 @@ NAMESPACE_BEGIN
 using namespace std;
 void EventBase::add_event(Event& event) 
 {
-	log.log_p(LOG_INFO, "%s", "add event");
 	_ioEventMap.insert( pair<int, Event*>(event.get_file_desc(), &event) ); 
 	_method->add(event.get_file_desc(), event.get_flags());
 }
@@ -37,7 +36,6 @@ void EventBase::dispatch()
 		int res = _method->dispatch(NULL);
 		if (0 == res)
 		{
-			log.log_p(LOG_INFO, "%s", "dispatch");
 			handle_active_events();
 		}
 	}
@@ -58,7 +56,6 @@ void EventBase::init_methods()
 
 void EventBase::handle_active_events()
 {
-	log.log_p(LOG_INFO, "%s", "handle events");
 	vector<Event*>::iterator iter;
 	for ( iter = _activeEvents.begin(); iter != _activeEvents.end(); iter++)
 	{

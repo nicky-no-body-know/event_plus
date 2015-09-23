@@ -23,7 +23,7 @@ void SelectMethod::add(int fd, int flags)
 	if (flags & EV_WRITE)
 		FD_SET(tmpfd, _writeset_in);
 	Log& log = _base.get_log();
-	log.log_p(LOG_INFO, "%s, maxfd=%d, size=%d", "select add", _maxfd, _size);
+	log.log_p(LOG_INFO, __FILE__, __FUNCTION__, __LINE__, "%s, maxfd=%d, size=%d", "select add", _maxfd, _size);
 }
 
 void SelectMethod::del(int fd, int flags)
@@ -45,8 +45,6 @@ int SelectMethod::dispatch(timeval *tv)
 
 	if (_isResized)
 	{
-		Log &log = _base.get_log();
-		log.log_p(LOG_INFO, "%s", "resize");
 		oldPtr = _readset_out;
 		_readset_out = (fd_set*)EventUtil_realloc(oldPtr, _size * sizeof(fd_set));
 		free(oldPtr);
