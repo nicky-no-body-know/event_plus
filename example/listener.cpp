@@ -13,7 +13,7 @@ int ServerListener::callback(int fd, int res) const
 	_base.get_log().LOG_P(LOG_INFO, "fd = %d, res = %d", fd, res);
 	if (EV_READ & res)
 	{
-		newfd = EventUtil_accept(fd, (struct sockaddr*)&addr, &addrlen);
+		newfd = accept(fd, (struct sockaddr*)&addr, &addrlen);
 		Event *newEvent = new Event(newfd, _cb, EV_READ | EV_WRITE);
 		_base.add_event(*newEvent);	
 	}

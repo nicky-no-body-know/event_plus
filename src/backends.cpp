@@ -77,7 +77,7 @@ int SelectMethod::dispatch(timeval *tv)
 		{
 			flag_res |= EV_WRITE;
 		}
-		if (0 != res)
+		if (0 != flag_res)
 			_base.add_active_event(i, flag_res);
 	}
 	return 0;

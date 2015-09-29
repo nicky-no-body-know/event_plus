@@ -55,18 +55,18 @@ private:
 	{
 		_maxfd = -1;
 		_isResized = false;
-		//_readset_in = (fd_set*)EventUtil_calloc(1, sizeof(fd_set) );
-		//_readset_out = (fd_set*)EventUtil_calloc(1, sizeof(fd_set) );
-		//_writeset_in = (fd_set*)EventUtil_calloc(1, sizeof(fd_set) );
-		//_readset_out = (fd_set*)EventUtil_calloc(1, sizeof(fd_set) );
-		_readset_in = (fd_set*)calloc(1, sizeof(fd_set));
-		_readset_out = (fd_set*)calloc(1, sizeof(fd_set));
-		_writeset_in = (fd_set*)calloc(1, sizeof(fd_set));
-		_writeset_out = (fd_set*)calloc(1, sizeof(fd_set));
-		//memset(_readset_in, 0x0, sizeof(fd_set));
-		//memset(_readset_out, 0x0, sizeof(fd_set));
-		//memset(_writeset_in, 0x0, sizeof(fd_set));
-		//memset(_writeset_out, 0x0, sizeof(fd_set));
+		_readset_in = (fd_set*)malloc( sizeof(fd_set) );
+		_readset_out = (fd_set*)malloc( sizeof(fd_set) );
+		_writeset_in = (fd_set*)malloc( sizeof(fd_set) );
+		_writeset_out = (fd_set*)malloc( sizeof(fd_set) );
+		//_readset_in = (fd_set*)calloc(1, sizeof(fd_set));
+		//_readset_out = (fd_set*)calloc(1, sizeof(fd_set));
+		//_writeset_in = (fd_set*)calloc(1, sizeof(fd_set));
+		//_writeset_out = (fd_set*)calloc(1, sizeof(fd_set));
+		FD_ZERO(_readset_in);
+		FD_ZERO(_readset_out);
+		FD_ZERO(_writeset_in);
+		FD_ZERO(_writeset_out);
 	}
 	void resize(int size);
 

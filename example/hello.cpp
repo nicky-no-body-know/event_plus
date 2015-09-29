@@ -14,18 +14,15 @@ struct HelloCallback : public EventCallback
 	virtual int callback(int fd, int res) const
 	{
 		int len = 0;
-		char hello[] = "hello\n";
-		char world[] = "world\n";
 		if ((res & EV_READ) && (res & EV_WRITE))
 		{
-			len = EventUtil_read(fd, buf);
+			int ret = read(fd, buf, len);
+			printf("ret = %d\n", ret);
 			if (0 == len)
 			{
 				_base.del_event(fd);
 			}
-			EventUtil_write(fd, hello, sizeof(hello));
-			EventUtil_write(fd, buf, len);
-			EventUtil_write(fd, world, sizeof(world));
+			write(fd, buf, len);
 		}
 		return 0;
 	}

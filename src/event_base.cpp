@@ -62,5 +62,6 @@ void EventBase::handle_active_events()
 		log.LOG_P(LOG_INFO, "fd = %d", (*iter)->get_file_desc());
 		(*iter)->callback();	
 	}
+	_activeEvents.clear();
 }
 NAMESPACE_END
