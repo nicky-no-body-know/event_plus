@@ -5,7 +5,6 @@
 #define log _base.get_log()
 NAMESPACE_BEGIN
 using namespace std;
-//这里调整字节的逻辑有问题
 void SelectMethod::add(int fd, int flags)
 {
 	assert(fd >= 0);
@@ -13,17 +12,17 @@ void SelectMethod::add(int fd, int flags)
 	if (tmpfd > _maxfd)
 	{
 		_maxfd = tmpfd;
-		if (_size < _maxfd + 1)
-		{
-			_size *= 2;
-			resize(_size);
-		}
+		//if (_size < _maxfd + 1)
+		//{
+		//	_size *= 2;
+		//	resize(_size);
+		//}
 	}
 	if (flags & EV_READ)
 		FD_SET(tmpfd, _readset_in);
 	if (flags & EV_WRITE)
 		FD_SET(tmpfd, _writeset_in);
-	log.LOG_P(LOG_INFO, "maxfd=%d, size=%d", _maxfd, _size);
+	log.LOG_P(LOG_INFO, "maxfd=%d", _maxfd);
 }
 
 void SelectMethod::del(int fd, int flags)
@@ -39,23 +38,23 @@ void SelectMethod::del(int fd, int flags)
 
 int SelectMethod::dispatch(timeval *tv)
 {
-	void *oldPtr;
+	//void *oldPtr;
 	int nfd;
 	int res;
 
-	if (_isResized)
-	{
-		oldPtr = _readset_out;
-		_readset_out = (fd_set*)EventUtil_realloc(oldPtr, _size );
-		free(oldPtr);
+	//if (_isResized)
+	//{
+	//	oldPtr = _readset_out;
+	//	_readset_out = (fd_set*)EventUtil_realloc(oldPtr, _size );
+	//	free(oldPtr);
 
-		oldPtr = _writeset_in;
-		_writeset_in = (fd_set*)EventUtil_realloc(oldPtr, _size );
-		free(oldPtr);
-		_isResized = false;
-	}
-	memcpy(_readset_out, _readset_in, _size);
-	memcpy(_writeset_out, _writeset_in, _size);
+	//	oldPtr = _writeset_in;
+	//	_writeset_in = (fd_set*)EventUtil_realloc(oldPtr, _size );
+	//	free(oldPtr);
+	//	_isResized = false;
+	//}
+	memcpy(_readset_out, _readset_in, sizeof(fd_set));
+	memcpy(_writeset_out, _writeset_in, sizeof(fd_set));
 	
 	nfd = _maxfd + 1;
 	res = ::select(nfd, _readset_out, _writeset_out, NULL, tv);
@@ -82,13 +81,13 @@ int SelectMethod::dispatch(timeval *tv)
 	}
 	return 0;
 }
-void SelectMethod::resize(int size)
-{
-	assert(size > 0);
-	_isResized = true;
-	EventUtil_realloc(_readset_in, size );
-	EventUtil_realloc(_writeset_in, size );
-}
+//void SelectMethod::resize(int size)
+//{
+//	assert(size > 0);
+//	_isResized = true;
+//	EventUtil_realloc(_readset_in, size );
+//	EventUtil_realloc(_writeset_in, size );
+//}
 
 
 NAMESPACE_END

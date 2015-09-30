@@ -38,22 +38,20 @@ void Log::log_open(const char *path, const char *prefix, const char *name)
 	snprintf(fileName, FILE_NAME_LEN, "%s", name);
 	
 	snprintf(fullName, FILE_FULL_LEN, "%s/%s-%s.log", filePath, filePrefix, fileName);
-	printf("log file name = %s\n", fullName);
 	if (-1 == (_fd = open(fullName, O_RDWR | O_CREAT | O_APPEND, 0666)))
 	{
 		perror("open log file failed!");
 		exit(1);
 	}
-	printf("fd = %d\n", _fd);
 }
 
 void Log::log_p(int level, const char *file_name, const char *func, const int line, const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	printf("[%s][%s][%s][%d]:", LogStr[level], file_name, func, line);
-	vprintf(fmt, args);
-	printf("\n");
+	dprintf(_fd, "[%s][%s][%s][%d]:", LogStr[level], file_name, func, line);
+	vdprintf(_fd, fmt, args);
+	dprintf(_fd, "\n");
 	va_end(args);
 }
 

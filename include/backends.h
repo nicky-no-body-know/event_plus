@@ -31,7 +31,7 @@ protected:
 class SelectMethod : public BaseMethod
 {
 public:
-	SelectMethod(EventBase& base, int fdsize) : BaseMethod(base), _size(fdsize) { init(); }
+	SelectMethod(EventBase& base/*, int fdsize*/) : BaseMethod(base)/*, _size(fdsize)*/ { init(); }
 
 	virtual ~SelectMethod()
 	{
@@ -54,7 +54,7 @@ private:
 	void init()
 	{
 		_maxfd = -1;
-		_isResized = false;
+		//_isResized = false;
 		_readset_in = (fd_set*)malloc( sizeof(fd_set) );
 		_readset_out = (fd_set*)malloc( sizeof(fd_set) );
 		_writeset_in = (fd_set*)malloc( sizeof(fd_set) );
@@ -68,11 +68,11 @@ private:
 		FD_ZERO(_writeset_in);
 		FD_ZERO(_writeset_out);
 	}
-	void resize(int size);
+	//void resize(int size);
 
-	int _size;
+	//int _size;
 	int _maxfd;
-	bool _isResized;
+	//bool _isResized;
 	fd_set *_readset_in, *_writeset_in;
 	fd_set *_readset_out, *_writeset_out;
 };

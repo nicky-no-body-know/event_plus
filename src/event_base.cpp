@@ -12,13 +12,14 @@ void EventBase::add_event(Event& event)
 }
 void EventBase::del_event(Event& event)
 {
-	_ioEventMap.erase( _ioEventMap.find(event.get_file_desc()) );
 	_method->del(event.get_file_desc(), event.get_flags());
+	_ioEventMap.erase( _ioEventMap.find(event.get_file_desc()) );
 }
 void EventBase::del_event(int fd)
 {
+	close(fd);
+	_method->del(fd, _ioEventMap.find(fd)->second->get_flags());
 	_ioEventMap.erase( _ioEventMap.find(fd) );
-	_method->del(_ioEventMap.find(fd)->second->get_file_desc(), _ioEventMap.find(fd)->second->get_flags());
 }
 
 void EventBase::add_active_event(int fd, int res) 
@@ -44,7 +45,7 @@ void EventBase::dispatch()
 void EventBase::init_methods()
 {
 #ifdef EVENT_PLUS_SELECT
-	_methods.push_back(new SelectMethod(*this, 8));
+	_methods.push_back(new SelectMethod(*this));
 #endif
 	vector<BaseMethod*>::iterator iter;
 	for (iter = _methods.begin(); iter != _methods.end(); iter++)

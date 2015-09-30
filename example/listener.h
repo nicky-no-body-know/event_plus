@@ -22,8 +22,8 @@ public:
 	{
 		Log& log = _base.get_log();
 		log.LOG_P(LOG_INFO, "sockfd = %d", _sock.get_file_desc());
-		EventUtil_bind(_sock.get_file_desc(), _addr, sizeof(*addr));
-		EventUtil_listen(sock.get_file_desc(), MAX_BACKLOG);
+		::bind(_sock.get_file_desc(), _addr, sizeof(*addr));
+		::listen(_sock.get_file_desc(), MAX_BACKLOG);	
 	}
 
 	virtual int callback(int fd, int res) const;

@@ -13,16 +13,17 @@ struct HelloCallback : public EventCallback
 	HelloCallback(EventBase& base) : _base(base) { }
 	virtual int callback(int fd, int res) const
 	{
-		int len = 0;
 		if ((res & EV_READ) && (res & EV_WRITE))
 		{
-			int ret = read(fd, buf, len);
-			printf("ret = %d\n", ret);
+			int len = ::read(fd, buf, BUFLEN);
 			if (0 == len)
 			{
 				_base.del_event(fd);
+			} else
+			{
+				printf("hello : %s\n", buf);
+				::write(fd, buf, len);
 			}
-			write(fd, buf, len);
 		}
 		return 0;
 	}
