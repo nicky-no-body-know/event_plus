@@ -5,9 +5,11 @@
 #define log _base.get_log()
 NAMESPACE_BEGIN
 using namespace std;
+
+/*-------------------------------select-------------------------------------*/
 void SelectMethod::add(int fd, int flags)
 {
-	assert(fd >= 0);
+	assert(fd > 0);
 	int tmpfd = fd;
 	if (tmpfd > _maxfd)
 	{
@@ -88,7 +90,77 @@ int SelectMethod::dispatch(timeval *tv)
 //	EventUtil_realloc(_readset_in, size );
 //	EventUtil_realloc(_writeset_in, size );
 //}
+/*-------------------------------select-------------------------------------*/
 
+/*-------------------------------poll-------------------------------------*/
+void PollMethod::add(int fd, int flags)
+{
+	struct pollfd *tmp;
+	tmp = _pfd + _nfd;
+	_nfd++;
+	
+	tmp->fd = fd;
+	if (flags & EV_READ)
+	{
+		tmp->events |= POLLIN;
+	}
+	if (flags & EV_WRITE)
+	{
+		tmp->events |= POLLOUT;
+	}
+}
+
+void PollMethod::del(int fd, int flags)
+{
+	struct pollfd *tmp;
+	for (int i = 0; tmp = _pfd + i, i < _nfd; i++)
+	{
+		if (tmp->fd == fd)
+			break;
+	}
+
+	if (flags & EV_READ)
+	{
+		tmp->events &= ~POLLIN;
+	}
+	if (flags & EV_WRITE)
+	{
+		tmp->events &= ~POLLOUT;
+	}
+}
+
+int PollMethod::dispatch(timeval *tv)
+{
+	struct pollfd *tmp;
+	int ret = 0;
+	if (_nfd > 0)
+	{
+		ret = poll(_pfd, _nfd, tv == NULL ? -1 : tv->tv_sec * 1000 + tv->tv_usec/1000);	
+	}
+	if (ret < 0)
+	{
+		perror("poll failed!");
+		exit(1);
+	}
+	for (int i = 0; tmp = _pfd + i, i < _nfd; i++)
+	{
+		int flag_res = 0;
+		if (tmp->revents & POLLIN)
+		{
+			flag_res |= EV_READ;
+		}
+		if (tmp->revents & POLLOUT)
+		{
+			flag_res |= EV_WRITE;
+		}
+		if (flag_res != 0)
+		{
+			_base.add_active_event(tmp->fd, flag_res);
+		}
+	}
+	return 0;
+}
+/*-------------------------------poll-------------------------------------*/
 
 NAMESPACE_END
 

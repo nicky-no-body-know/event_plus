@@ -21,4 +21,7 @@
 #include <cassert>
 #include <map>
 #include <vector>
+#include <poll.h>
+#include <pthread.h>
+#include <semaphore.h>
 #endif

@@ -21,7 +21,7 @@ struct HelloCallback : public EventCallback
 				_base.del_event(fd);
 			} else
 			{
-				printf("hello : %s\n", buf);
+				printf("hello : %s", buf);
 				::write(fd, buf, len);
 			}
 		}
@@ -42,7 +42,7 @@ int main()
 	addr.sin_port = htons(SERVER_PORT);
 	addr.sin_addr.s_addr = INADDR_ANY;
 
-	ServerListener listener(base, listen_sock, (const struct sockaddr*)&addr, &hello);	
+	ServerListener listener(base, listen_sock, (struct sockaddr*)&addr, &hello);	
 	Event lev(listen_sock.get_file_desc(), &listener, EV_READ);
 	base.add_event(lev);
 

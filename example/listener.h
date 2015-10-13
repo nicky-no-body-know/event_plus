@@ -17,7 +17,7 @@ class TcpSocket;
 class ServerListener : public EventCallback
 {
 public:
-	ServerListener(EventBase& base, const TcpSocket& sock, const sockaddr *addr, EventCallback *cb) :
+	ServerListener(EventBase& base, const TcpSocket& sock, struct sockaddr *addr, EventCallback *cb) :
 		_base(base), _sock(sock), _addr(addr), _cb(cb)
 	{
 		Log& log = _base.get_log();
@@ -33,7 +33,7 @@ private:
 
 	EventBase& _base;
 	const TcpSocket& _sock;	
-	const sockaddr *_addr;
+	struct sockaddr *_addr;
 	EventCallback *_cb;
 };
 NAMESPACE_END

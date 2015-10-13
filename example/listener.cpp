@@ -7,13 +7,12 @@ NAMESPACE_BEGIN
 int ServerListener::callback(int fd, int res) const
 {
 	int newfd;
-	struct sockaddr_in addr;
-	socklen_t addrlen;
-	
+	socklen_t addrlen = sizeof(_addr);
+
 	_base.get_log().LOG_P(LOG_INFO, "fd = %d, res = %d", fd, res);
 	if (EV_READ & res)
 	{
-		newfd = accept(fd, (struct sockaddr*)&addr, &addrlen);
+		newfd = ::accept(fd, _addr,  &addrlen);
 		Event *newEvent = new Event(newfd, _cb, EV_READ | EV_WRITE);
 		_base.add_event(*newEvent);	
 	}

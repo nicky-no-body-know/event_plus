@@ -44,6 +44,9 @@ void EventBase::dispatch()
 
 void EventBase::init_methods()
 {
+#ifdef EVENT_PLUS_POLL
+	_methods.push_back(new PollMethod(*this));
+#endif
 #ifdef EVENT_PLUS_SELECT
 	_methods.push_back(new SelectMethod(*this));
 #endif
