@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
 #include <sys/select.h>
 #include <errno.h>
 #include "event_plus_internal.h"
