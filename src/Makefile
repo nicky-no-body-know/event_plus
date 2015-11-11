@@ -4,7 +4,7 @@ INCLUDE = -I../include
 TARGET = event_plus.o
 all : $(TARGET)
 event_plus.o : event_plus.cc
-	$(CXX) $(CXXFLAGS) $(INCLUDE) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean:
 	rm -rf *.o

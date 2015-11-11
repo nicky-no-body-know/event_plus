@@ -8,7 +8,7 @@
 #include <fcntl.h>
 
 const char *fifo = "event.fifo";
-
+using namespace event_plus;
 class FifoEvent : public event_plus::Event {
 public:
 	FifoEvent(int fd, int type, int ncall) : 
@@ -24,9 +24,9 @@ public:
 			}
 		}
 		std::string str(buf, n);	
-		std::cout << "read:" << str << endl;
+		std::cout << "read:" << str << std::endl;
+		return 0;
 	}
-private:
 };
 int main() {
 	unlink(fifo);
@@ -45,6 +45,6 @@ int main() {
 
 	Event *event = new FifoEvent(fd, EV_READ | EV_PERSIST, 1);
 	EventBase::GetInstance()->AddEvent(*event);
-	EventBase::GetInstance()->Dispatch();
+	EventBase::GetInstance()->Dispatch(0);
 	return 0;
 }
