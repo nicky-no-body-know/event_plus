@@ -10,4 +10,4 @@ event_test : event_test.cc
 	$(CXX) $(CXXFLAGS) $(INCLUDE) ../src/event_plus.o $^ -o $@
 
 clean : 
-	rm -rf $(TARGET) *.o
+	rm -rf $(TARGET) *.o *.dSYM
