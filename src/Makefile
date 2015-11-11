@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -g -fno-strict-aliasing -Werror -Wall -stdlib=libc++
+CXXFLAGS = -g -fno-strict-aliasing -Werror -Wall -stdlib=libstdc++
 INCLUDE = -I../include
 TARGET = event_plus.o
 all : $(TARGET)
